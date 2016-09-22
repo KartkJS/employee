@@ -12,9 +12,9 @@ You can test the application with the help of JerseyClient class.
 The application has been tested with an Oracle and a My SQL database.
 
 Use will need to point it to your database. However it will create table automatically.
-spring.datasource.url=jdbc:mysql://localhost:3306/appdirect
-spring.datasource.username=root
-spring.datasource.password=******
+- spring.datasource.url=jdbc:mysql://localhost:3306/appdirect
+- spring.datasource.username=root
+- spring.datasource.password=******
 
 
 ## Online demo
