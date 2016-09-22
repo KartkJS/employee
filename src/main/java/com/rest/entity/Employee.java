@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-//... import statements
-
 @Entity
 @Table(
         name = "emp1000")
@@ -21,18 +19,14 @@ public class Employee implements Serializable {
 
     @Id
     @GeneratedValue
-    /* @XmlAttribute(name = "id") */
     private Long empId;
 
-    /* @XmlElement(name = "name") */
     @Column
     private String name;
 
-    /* @XmlElement(name = "password") */
     @Column
     private String password;
 
-    /* @XmlElement(name = "salary") */
     @Column
     private BigDecimal salary;
 
@@ -67,6 +61,4 @@ public class Employee implements Serializable {
     public void setSalary(final BigDecimal salary) {
         this.salary = salary;
     }
-
-    // ...constructors, getters and setters
 }

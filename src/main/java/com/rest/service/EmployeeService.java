@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.service;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,8 @@ import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-//...import statements
+import com.rest.dao.EmployeeDao;
+import com.rest.entity.Employee;
 
 @Path("ui")
 @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -31,13 +32,12 @@ public class EmployeeService {
     private UriInfo uriInfo;
 
     @POST
+    @Path("/create/employee")
     public Response createEmployee(final Employee employee) {
-        this.employeeDao.save(employee);
-        /*
-         * URI uri = this.uriInfo.getAbsolutePathBuilder() .path(employee.getEmpId() .toString()) .build(); return Response.created(uri) .build();
-         */
-        Employee selectedEmp = this.employeeDao.findOne(Long.valueOf(employee.getEmpId()));
+        Employee createdEmployee = this.employeeDao.save(employee);
+        Employee selectedEmp = this.employeeDao.findOne(Long.valueOf(createdEmployee.getEmpId()));
         return Response.ok(selectedEmp)
+                .entity(selectedEmp)
                 .build();
     }
 
@@ -64,7 +64,6 @@ public class EmployeeService {
     @GET
     @Path("/employees")
     public ArrayList<Employee> getEmployees() {
-
         ArrayList<Employee> employees = (ArrayList<Employee>) this.employeeDao.findAll();
         return employees;
     }
