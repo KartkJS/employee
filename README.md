@@ -12,6 +12,8 @@ Use will need to point it to your database. However it will create table automat
 - spring.datasource.username=root
 - spring.datasource.password=******
 
+Note: Some issues were being faced in testing the code so it may not be complete.
+
 
 ## Online demo
 
