@@ -22,11 +22,9 @@ Use will need to point it to your database. However it will create table automat
 
 ## Download release
 
-Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to http://vaadin.com/addon/vaadin-excel-exporter
-
 ## Building and running demo
 
-git clone https://github.com/bonprix/vaadin-excel-exporter
+git clone https://github.com/KartkJS/employee
 mvn clean install
 cd demo
 mvn jetty:run
@@ -50,25 +48,12 @@ Note that Eclipse may give "Plugin execution not covered by lifecycle configurat
 
 ### Debugging server-side
 
-If you have not already compiled the widgetset, do it now by running vaadin:install Maven target for vaadin-excel-exporter-root project.
-
-If you have a JRebel license, it makes on the fly code changes faster. Just add JRebel nature to your vaadin-excel-exporter-demo project by clicking project with right mouse button and choosing JRebel > Add JRebel Nature
-
-To debug project and make code modifications on the fly in the server-side, right-click the vaadin-excel-exporter-demo project and choose Debug As > Debug on Server. Navigate to http://localhost:8080/vaadin-excel-exporter-demo/ to see the application.
-
 ### Debugging client-side
 
-Debugging client side code in the vaadin-excel-exporter-demo project:
-  - run "mvn vaadin:run-codeserver" on a separate console while the application is running
-  - activate Super Dev Mode in the debug window of the application or by adding ?superdevmode to the URL
-  - You can access Java-sources and set breakpoints inside Chrome if you enable source maps from inspector settings.
- 
 ## Release notes
-
 
 ### Version 1.0.1
 - Initial release
-
 
 ## Roadmap
 
