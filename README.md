@@ -4,9 +4,6 @@ This project mainly has CRUD EmployeeService for an Employee Entity.
 
 It has two end points one for Subscription and the other one for Single Sign On.
 
-I have tried to follow each step required for the Subscription End point but was facing issues with 401 Unauthorized status.
-I have also implemented SSL security but since Tomcat SSL configuration doesn't work with classpath resources so was not able to set the trust-store.
-
 You can test the application with the help of JerseyClient class.
 
 The application has been tested with an Oracle and a My SQL database.
