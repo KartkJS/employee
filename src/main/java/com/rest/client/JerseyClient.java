@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,8 +22,6 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
-import org.apache.http.Header;
-import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -33,6 +32,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Request;
+import com.ning.http.client.RequestBuilder;
+import com.ning.http.client.Response;
+import com.ning.http.client.oauth.ConsumerKey;
+import com.ning.http.client.oauth.OAuthSignatureCalculator;
+import com.ning.http.client.oauth.RequestToken;
 import com.rest.entity.Employee;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -46,26 +52,58 @@ import com.sun.jersey.api.client.WebResource;
  */
 public class JerseyClient {
 
-    public static void main(final String[] args) {
+	static String key = "8ff3d152-9362-405a-ba4b-e03ba3cf20d0";
+	static String prefix =  "https%3A%2F%2Fwww.appdirect.com%2Fapi%2Fintegration%2Fv1%2Fevents%2F";
+	
+//    public static void main(final String[] args) {
+//
+//        try {
+//
+//            ignoreLocalHostFromSSL();
+//
+//            /* Create an Employee */
+//            testCreateEmployeeResponseEmployeeEntity();
+//            testCreateEmployeeResponseXML();
+//            testReadEmployeeResponseEmployeeEntity();
+//            testReadEmployeesResponseEmployeeEntity();
+//
+//            //Trial 1
+//           testCreateSubscriptionEvent();
+//           
+//           //Trial 2
+//            getEventDetails(prefix+key, 
+//            		"OAuth oauth_consumer_key="+"customer-crud-137161"+", oauth_version="+"1.0"+", oauth_signature_method="+"HMAC-SHA1"+", oauth_timestamp="+"1474570091"+", oauth_nonce="+"8440743720406272615"+", oauth_signature="+"1Lx67ZvmFJMcARspYA8nERaDVsc%3D");
+//            
+//            //Trial 3
+//            verifyAsyncHttpClient(prefix+key);
+//
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    
+    public static void verifyAsyncHttpClient(String eventUrl)
+    {
+    	OAuthSignatureCalculator calc = new OAuthSignatureCalculator(new ConsumerKey("customer-crud-137161", "exDfdls5IZ0OBNoi"), new RequestToken(null, null));
+    	Request arequest = null;
+		try {
+		arequest = new RequestBuilder().setUrl(URLDecoder.decode(eventUrl,"UTF-8")).build();
+		AsyncHttpClient client = new AsyncHttpClient();
+		   Response response = client.prepareGet((URLDecoder.decode(eventUrl,"UTF-8")))
+		     .execute().get();
 
-        try {
-
-            ignoreLocalHostFromSSL();
-
-            /* Create an Employee */
-            testCreateEmployeeResponseEmployeeEntity();
-            testCreateEmployeeResponseXML();
-            testReadEmployeeResponseEmployeeEntity();
-            testReadEmployeesResponseEmployeeEntity();
-
-            testCreateSubscriptionEvent();
-            getEventDetails("https%3A%2F%2Fwww.appdirect.com%2Fapi%2Fintegration%2Fv1%2Fevents%2F8551f77c-805a-4c32-b7d6-97158c4a9f5b", 
-            		"OAuth oauth_consumer_key="+"customer-crud-137161"+", oauth_version="+"1.0"+", oauth_signature_method="+"HMAC-SHA1"+", oauth_timestamp="+"1474570091"+", oauth_nonce="+"8440743720406272615"+", oauth_signature="+"1Lx67ZvmFJMcARspYA8nERaDVsc%3D");
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+	    	System.out.println("Response : " + response.getStatusText());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException | ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -228,7 +266,7 @@ public class JerseyClient {
             OAuthConsumer consumer = new DefaultOAuthConsumer("customer-crud-137161", "exDfdls5IZ0OBNoi");
             URL url;
             url = new URL(
-                    URLDecoder.decode("https%3A%2F%2Fwww.appdirect.com%2Fapi%2Fintegration%2Fv1%2Fevents%2F89e23ce5-e060-4bd8-b4a9-60199dd550af", "UTF-8"));
+                    URLDecoder.decode(prefix+key, "UTF-8"));
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
             consumer.sign(request);
             System.out.println(request.getResponseCode());
