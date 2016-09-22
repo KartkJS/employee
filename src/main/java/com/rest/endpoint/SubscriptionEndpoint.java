@@ -61,7 +61,7 @@ public class SubscriptionEndpoint {
             System.out.println("status : " + r.getStatus());
 
             /* Trial 2 and 3 done in Jersey Client class. No Success achieved. Getting 401 Unauthorized :( */
-            JerseyClient.getEventDetails(eventUrl);
+            JerseyClient.getEventDetails(eventUrl, authorization);
 
         }
         catch (URISyntaxException e) {

@@ -21,6 +21,8 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.Header;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -44,26 +46,27 @@ import com.sun.jersey.api.client.WebResource;
  */
 public class JerseyClient {
 
-//    public static void main(final String[] args) {
-//
-//        try {
-//
-//            ignoreLocalHostFromSSL();
-//
-//            /* Create an Employee */
-//            testCreateEmployeeResponseEmployeeEntity();
-//            testCreateEmployeeResponseXML();
-//            testReadEmployeeResponseEmployeeEntity();
-//            testReadEmployeesResponseEmployeeEntity();
-//
-//            testCreateSubscriptionEvent();
-//            getEventDetails("https%3A%2F%2Fwww.appdirect.com%2Fapi%2Fintegration%2Fv1%2Fevents%2F8551f77c-805a-4c32-b7d6-97158c4a9f5b");
-//
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void main(final String[] args) {
+
+        try {
+
+            ignoreLocalHostFromSSL();
+
+            /* Create an Employee */
+            testCreateEmployeeResponseEmployeeEntity();
+            testCreateEmployeeResponseXML();
+            testReadEmployeeResponseEmployeeEntity();
+            testReadEmployeesResponseEmployeeEntity();
+
+            testCreateSubscriptionEvent();
+            getEventDetails("https%3A%2F%2Fwww.appdirect.com%2Fapi%2Fintegration%2Fv1%2Fevents%2F8551f77c-805a-4c32-b7d6-97158c4a9f5b", 
+            		"OAuth oauth_consumer_key="+"customer-crud-137161"+", oauth_version="+"1.0"+", oauth_signature_method="+"HMAC-SHA1"+", oauth_timestamp="+"1474570091"+", oauth_nonce="+"8440743720406272615"+", oauth_signature="+"1Lx67ZvmFJMcARspYA8nERaDVsc%3D");
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 
@@ -295,7 +298,7 @@ public class JerseyClient {
      * 
      * Not working since I am getting 401 Gone status.
      */
-    public static Integer getEventDetails(final String eventUrl) {
+    public static Integer getEventDetails(final String eventUrl, String authorization) {
 
         InputStream inputStream = null;
         String ul;
@@ -311,6 +314,8 @@ public class JerseyClient {
 
             /* Httppost Method */
             HttpGet httpget = new HttpGet(ul);
+            
+            httpget.addHeader("Authorization", authorization);
 
             // sign the request
             consumer.sign(httpget);
